@@ -11,8 +11,13 @@ public class RatoncitoFiuFiu {
     private int suciedad; //nivel de suciedad de la mascota entre 0(limpio) y 100(sucio)
     private int salud; //salud de la mascota entre 0(muero) y 100(sano)
     private int energia; //energia de la mascota entre 0(apatico) y 100 (activo)
-    public RatoncitoFiuFiu(String nombre, int i, int i1, int i2, int i3, int i4) {
-        // Un objeto mascota.RatoncitoFiuFiu debería informar cuando nace...
+    public RatoncitoFiuFiu(String nombre, int peso, byte hambre, byte suciedad, byte salud, byte energia){
+        this.nombre = nombre;
+        this.peso = peso;
+        this.hambre = hambre;
+        this.suciedad = suciedad;
+        this.salud = salud;
+        this.energia = energia;
     }
 
 
