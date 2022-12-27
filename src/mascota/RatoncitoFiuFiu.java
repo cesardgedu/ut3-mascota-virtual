@@ -91,6 +91,17 @@ public class RatoncitoFiuFiu {
 
     public boolean tienesHambre(){
         if (this.hambre > 4){
+            this.aumentarSalud(-2);
+            if (this.hambre >= 6){
+                this.aumentarSalud(-1);
+                System.out.println("a");
+            }
+            if (this.hambre >= 8){
+                this.aumentarSalud(-4);
+            }
+            if (this.hambre >= 10){
+                this.aumentarSalud(-5);
+            }
             return true;
         }
         return false;
@@ -196,7 +207,7 @@ public class RatoncitoFiuFiu {
     }
 
     public boolean tienesQuejas() {
-        if (this.hambre >= 4){
+        if (this.tienesHambre() && !estasMuerto()){
             return true;
         }
 
