@@ -59,7 +59,6 @@ public class RatoncitoFiuFiu {
     }
 
     public void envejecer(int tiempo) {
-        System.out.println(this.edad);
         this.aumentarTiempo(tiempo);
         this.aumentarHambre((float) tiempo / 10);
         this.aumentarSuciedad((float) tiempo / 15);
@@ -84,6 +83,7 @@ public class RatoncitoFiuFiu {
 
     public boolean estasMuerto() {
         if (this.salud <= 0){
+            System.out.println(this.edad);
             return true;
         }
         return false;
@@ -124,7 +124,9 @@ public class RatoncitoFiuFiu {
     }
 
     private void aumentarSalud(float cantidad){
-        this.salud += cantidad;
+        if (!estasMuerto()) {
+            this.salud += cantidad;
+        }
 
         if (this.salud < 0){
             this.salud = 0;
@@ -194,7 +196,7 @@ public class RatoncitoFiuFiu {
     }
 
     public boolean tienesQuejas() {
-        if (!estasFeliz()){
+        if (this.hambre >= 4){
             return true;
         }
 

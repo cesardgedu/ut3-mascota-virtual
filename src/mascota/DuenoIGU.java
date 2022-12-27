@@ -53,6 +53,7 @@ public class DuenoIGU extends JFrame {
             dormido = !despierto;
             enfermo = mascota.estasEnfermo();
             sucio = mascota.estasSucio();
+
             despiertoSucio = despierto && sucio;
             despiertoEnfermo = despierto && enfermo;
             despiertoEnfermoSucio = despiertoSucio && despiertoEnfermo;
@@ -65,9 +66,12 @@ public class DuenoIGU extends JFrame {
                 rutaImagenes = getClass().getResource("../imagenes").toString();
                 ruta1 = "";
                 ruta2 = "";
-
                 if (!mascota.tienesQuejas()) {
-                    if (despiertoEnfermoSucio) {
+                    if (muerto) {
+                        ruta1 = rutaImagenes + "/muerto.gif";
+                        ruta2 = rutaImagenes + "/muerto.gif";
+                    }
+                    else if (despiertoEnfermoSucio) {
                         ruta1 = rutaImagenes + "/despierto-enfermo-sucio-" + tramoEdad.toString() + "-00.gif";
                         ruta2 = rutaImagenes + "/despierto-enfermo-sucio-" + tramoEdad.toString() + "-01.gif";
                     } else if (despiertoSucio) {
@@ -91,9 +95,6 @@ public class DuenoIGU extends JFrame {
                     } else if (dormido) {
                         ruta1 = rutaImagenes + "/dormido-" + tramoEdad.toString() + "-00.gif";
                         ruta2 = rutaImagenes + "/dormido-" + tramoEdad.toString() + "-01.gif";
-                    } else if (muerto) {
-                        ruta1 = rutaImagenes + "/muerto.gif";
-                        ruta2 = rutaImagenes + "/muerto.gif";
                     }
                 } else {
                     if (mascota.estasSucio()) {
@@ -140,7 +141,7 @@ public class DuenoIGU extends JFrame {
 
     //Construir el marco
     public DuenoIGU() {
-        mascota = new RatoncitoFiuFiu("Nombre", 50, (byte) 50, (byte) 50, (byte) 100, (byte) 100);
+        mascota = new RatoncitoFiuFiu("Nombre", 50, (byte) 2, (byte) 20, (byte) 100, (byte) 100);
         temporizador = new Timer();
         temporizador.schedule(new Envejecimiento(mascota, labelGrafica), 0, 500);
         horaAnterior = System.currentTimeMillis();
