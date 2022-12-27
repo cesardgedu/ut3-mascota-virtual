@@ -5,8 +5,8 @@ public class RatoncitoFiuFiu {
     // La clase mascota.RatoncitoFiuFiu aun no tiene ningun atributo
     //
 
-    private final int INFANCIA = 10;
-    private final  int ADULTO = 25;
+    private final int INFANCIA = 150;
+    private final  int ADULTO = 800;
     private String nombre; //nombre de la mascota
     private int edad; //tiempo en segundos de la mascota
     private float peso; //peso en gramos de la mascota
@@ -62,7 +62,7 @@ public class RatoncitoFiuFiu {
         this.aumentarTiempo(tiempo);
         this.aumentarHambre((float) tiempo / 10);
         this.aumentarSuciedad((float) tiempo / 15);
-        this.aumentarEnergia((float) - tiempo / 20);
+        this.aumentarEnergia((float) - tiempo / 15);
         this.ganarPeso((float) - tiempo / 60);
         this.aumentarSalud((float) - tiempo / 50);
     }
@@ -91,16 +91,15 @@ public class RatoncitoFiuFiu {
 
     public boolean tienesHambre(){
         if (this.hambre > 4){
-            this.aumentarSalud(-2);
             if (this.hambre >= 6){
-                this.aumentarSalud(-1);
+                this.aumentarSalud(-2);
                 System.out.println("a");
             }
             if (this.hambre >= 8){
-                this.aumentarSalud(-4);
+                this.aumentarSalud(-5);
             }
             if (this.hambre >= 10){
-                this.aumentarSalud(-5);
+                this.aumentarSalud(-6);
             }
             return true;
         }
@@ -119,6 +118,10 @@ public class RatoncitoFiuFiu {
 
         if (peso < 0){
             this.peso = 0;
+        }
+
+        if (this.peso > 60 || this.peso < 40){
+            this.aumentarSalud(-2);
         }
     }
 
@@ -162,7 +165,7 @@ public class RatoncitoFiuFiu {
 
     private void aumentarHambre(float cantidad){
         this.hambre += cantidad;
-        this.aumentarEnergia(cantidad / 2);
+        this.aumentarEnergia(cantidad / 5);
 
         if (this.hambre < 0){
             this.hambre = 0;
@@ -177,6 +180,14 @@ public class RatoncitoFiuFiu {
         this.edad += segundos;
     }
     public boolean estasDormido() {
+        if (this.energia < 30){
+            this.aumentarSalud(-2);
+
+            if (this.energia < 20){
+                this.aumentarSalud(-5);
+            }
+        }
+
         if (this.energia < 50){
             this.duerme = true;
             return true;
@@ -190,6 +201,7 @@ public class RatoncitoFiuFiu {
         if (this.energia > 50){
             return this.duerme;
         }
+
 
         return this.duerme;
     }
