@@ -17,6 +17,7 @@ public class DuenoIGU extends JFrame {
     private JPanel contentPane;
     private BorderLayout borderLayout1 = new BorderLayout();
     private JToolBar jToolBar1 = new JToolBar();
+    private JButton botonJugar = new JButton();
     private JButton botonEstadisticas = new JButton();
     private JButton botonLimpiar = new JButton();
     private JButton botonCurar = new JButton();
@@ -47,14 +48,17 @@ public class DuenoIGU extends JFrame {
             Integer tramoEdad = mascota.queTramoEdad();
             String rutaImagenes;
             URL URLruta1, URLruta2;
-            boolean despierto, sucio, enfermo, despiertoSucio, despiertoEnfermo, despiertoEnfermoSucio, dormido, dormidoSucio, dormidoEnfermo, dormidoEnfermoSucio, muerto;
+            boolean despierto,juega,despiertoSucioJuega,despiertoJuega, sucio, enfermo, despiertoSucio, despiertoEnfermo, despiertoEnfermoSucio, dormido, dormidoSucio, dormidoEnfermo, dormidoEnfermoSucio, muerto;
 
             despierto = !mascota.estasDormido();
             dormido = !despierto;
             enfermo = mascota.estasEnfermo();
             sucio = mascota.estasSucio();
+            juega = mascota.estasFeliz();
 
             despiertoSucio = despierto && sucio;
+            despiertoJuega = despierto && juega;
+            despiertoSucioJuega = despiertoJuega && sucio;
             despiertoEnfermo = despierto && enfermo;
             despiertoEnfermoSucio = despiertoSucio && despiertoEnfermo;
             dormidoSucio = dormido && sucio;
@@ -70,19 +74,6 @@ public class DuenoIGU extends JFrame {
                     if (muerto) {
                         ruta1 = rutaImagenes + "/muerto.gif";
                         ruta2 = rutaImagenes + "/muerto.gif";
-                    }
-                    else if (despiertoEnfermoSucio) {
-                        ruta1 = rutaImagenes + "/despierto-enfermo-sucio-" + tramoEdad.toString() + "-00.gif";
-                        ruta2 = rutaImagenes + "/despierto-enfermo-sucio-" + tramoEdad.toString() + "-01.gif";
-                    } else if (despiertoSucio) {
-                        ruta1 = rutaImagenes + "/despierto-sucio-" + tramoEdad.toString() + "-00.gif";
-                        ruta2 = rutaImagenes + "/despierto-sucio-" + tramoEdad.toString() + "-01.gif";
-                    } else if (despiertoEnfermo) {
-                        ruta1 = rutaImagenes + "/despierto-enfermo-" + tramoEdad.toString() + "-00.gif";
-                        ruta2 = rutaImagenes + "/despierto-enfermo-" + tramoEdad.toString() + "-01.gif";
-                    } else if (despierto) {
-                        ruta1 = rutaImagenes + "/despierto-" + tramoEdad.toString() + "-00.gif";
-                        ruta2 = rutaImagenes + "/despierto-" + tramoEdad.toString() + "-01.gif";
                     } else if (dormidoEnfermoSucio) {
                         ruta1 = rutaImagenes + "/dormido-enfermo-sucio-" + tramoEdad.toString() + "-00.gif";
                         ruta2 = rutaImagenes + "/dormido-enfermo-sucio-" + tramoEdad.toString() + "-01.gif";
@@ -95,6 +86,24 @@ public class DuenoIGU extends JFrame {
                     } else if (dormido) {
                         ruta1 = rutaImagenes + "/dormido-" + tramoEdad.toString() + "-00.gif";
                         ruta2 = rutaImagenes + "/dormido-" + tramoEdad.toString() + "-01.gif";
+                    } else if (despiertoEnfermoSucio) {
+                        ruta1 = rutaImagenes + "/despierto-enfermo-sucio-" + tramoEdad.toString() + "-00.gif";
+                        ruta2 = rutaImagenes + "/despierto-enfermo-sucio-" + tramoEdad.toString() + "-01.gif";
+                    }  else if (despiertoEnfermo) {
+                        ruta1 = rutaImagenes + "/despierto-enfermo-" + tramoEdad.toString() + "-00.gif";
+                        ruta2 = rutaImagenes + "/despierto-enfermo-" + tramoEdad.toString() + "-01.gif";
+                    } else if (despiertoSucioJuega){
+                        ruta1 = rutaImagenes + "/jugar-sucio1.png";
+                        ruta2 = rutaImagenes + "/jugar-sucio2.png";
+                    } else if (despiertoJuega) {
+                        ruta1 = rutaImagenes + "/jugar1.png";
+                        ruta2 = rutaImagenes + "/jugar2.png";
+                    } else if (despiertoSucio) {
+                        ruta1 = rutaImagenes + "/despierto-sucio-" + tramoEdad.toString() + "-00.gif";
+                        ruta2 = rutaImagenes + "/despierto-sucio-" + tramoEdad.toString() + "-01.gif";
+                    } else if (despierto) {
+                        ruta1 = rutaImagenes + "/despierto-" + tramoEdad.toString() + "-00.gif";
+                        ruta2 = rutaImagenes + "/despierto-" + tramoEdad.toString() + "-01.gif";
                     }
                 } else {
                     if (mascota.estasSucio()) {
@@ -192,6 +201,14 @@ public class DuenoIGU extends JFrame {
                 botonAlimentar_mouseClicked(e);
             }
         });
+
+        botonJugar.setText("Jugar");
+        botonJugar.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                botonJugar_mouseClicked(e);
+            }
+        });
+
         jSplitPane1.setOrientation(JSplitPane.VERTICAL_SPLIT);
         jSplitPane1.setBorder(null);
         jSplitPane1.setBottomComponent(labelGrafica);
@@ -206,6 +223,7 @@ public class DuenoIGU extends JFrame {
         jToolBar1.add(botonAlimentar, null);
         jToolBar1.add(botonCurar, null);
         jToolBar1.add(botonLimpiar, null);
+        jToolBar1.add(botonJugar, null);
         jToolBar1.add(botonEstadisticas, null);
         contentPane.add(jSplitPane1, BorderLayout.CENTER);
         jSplitPane1.add(labelGrafica, JSplitPane.RIGHT);
@@ -241,6 +259,11 @@ public class DuenoIGU extends JFrame {
         //Aqu� pedimos estadisticas
         labelSalida.setText(mascota.estadisticas());
         horaAnterior = System.currentTimeMillis();
+    }
+
+    void botonJugar_mouseClicked(MouseEvent e) {
+        // Aqui alimentamos a la mascota
+        mascota.jugar(15);
     }
 
     void hazmeCaso() {

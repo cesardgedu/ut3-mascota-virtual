@@ -15,6 +15,7 @@ public class RatoncitoFiuFiu {
     private float salud; //salud de la mascota entre 0(muero) y 100(sano)
     private float energia; //energia de la mascota entre 0(apatico) y 100 (activo)
     private boolean duerme;
+    private int tiempoJuego;
 
     public RatoncitoFiuFiu(String nombre, int peso, byte hambre, byte suciedad, byte salud, byte energia) {
         this.nombre = nombre;
@@ -24,6 +25,7 @@ public class RatoncitoFiuFiu {
         this.salud = salud;
         this.energia = energia;
         this.duerme = false;
+        this.tiempoJuego = 0;
     }
 
     public void alimentar(float cantidadAlimento) {
@@ -65,6 +67,7 @@ public class RatoncitoFiuFiu {
         this.aumentarEnergia((float) - tiempo / 15);
         this.ganarPeso((float) - tiempo / 60);
         this.aumentarSalud((float) - tiempo / 50);
+        this.aumentarTiempoJuego((float) - tiempo);
     }
 
     public boolean estasSucio() {
@@ -83,7 +86,6 @@ public class RatoncitoFiuFiu {
 
     public boolean estasMuerto() {
         if (this.salud <= 0){
-            System.out.println(this.edad);
             return true;
         }
         return false;
@@ -93,7 +95,6 @@ public class RatoncitoFiuFiu {
         if (this.hambre > 4){
             if (this.hambre >= 6){
                 this.aumentarSalud(-2);
-                System.out.println("a");
             }
             if (this.hambre >= 8){
                 this.aumentarSalud(-5);
@@ -107,7 +108,7 @@ public class RatoncitoFiuFiu {
     }
 
     public boolean estasFeliz(){
-        if (!tienesHambre() && !estasSucio() && !estasEnfermo()){
+        if (!tienesHambre() && !estasEnfermo() && estasEntretenido()){
             return true;
         }
         return false;
@@ -224,5 +225,22 @@ public class RatoncitoFiuFiu {
         }
 
         return false;
+    }
+
+    public boolean estasEntretenido(){
+        if (tiempoJuego > 10){
+            return true;
+        }
+        return false;
+    }
+
+    public void aumentarTiempoJuego(float segundos){
+        this.tiempoJuego += segundos;
+    }
+    public boolean jugar (float cantidadDiversion){
+        this.aumentarEnergia(-cantidadDiversion/3);
+        this.aumentarHambre(cantidadDiversion/7);
+        this.aumentarTiempoJuego(cantidadDiversion);
+        return true;
     }
 }
