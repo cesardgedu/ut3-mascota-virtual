@@ -16,6 +16,7 @@ public class RatoncitoFiuFiu {
     private float energia; //energia de la mascota entre 0(apatico) y 100 (activo)
     private boolean duerme;
     private int tiempoJuego;
+    private float vezesCurada;
 
     public RatoncitoFiuFiu(String nombre, int peso, byte hambre, byte suciedad, byte salud, byte energia) {
         this.nombre = nombre;
@@ -26,6 +27,7 @@ public class RatoncitoFiuFiu {
         this.energia = energia;
         this.duerme = false;
         this.tiempoJuego = 0;
+        this.vezesCurada = 0;
     }
 
     public void alimentar(float cantidadAlimento) {
@@ -35,7 +37,7 @@ public class RatoncitoFiuFiu {
         }
 
         if (tienesHambre()){
-            this.aumentarSalud(1);
+            this.aumentarSalud(3);
         }
 
         if (!tienesHambre()){
@@ -44,7 +46,17 @@ public class RatoncitoFiuFiu {
     }
 
     public void curar(float cantidadMedicina) {
-        this.aumentarSalud(cantidadMedicina / 5);
+        if (vezesCurada > 3){
+            this.aumentarSalud(-(cantidadMedicina));
+        } else if (!this.estasEnfermo()){
+            this.aumentarSalud(-(cantidadMedicina / 3));
+        } else {
+            this.aumentarSalud(-(cantidadMedicina / 5));
+        }
+        if(vezesCurada < 0){
+            vezesCurada = 0;
+        }
+        vezesCurada++;
     }
     public void limpiar(float esfuerzoHigienico) {
         this.aumentarSuciedad(-(esfuerzoHigienico / 5));
@@ -62,16 +74,34 @@ public class RatoncitoFiuFiu {
 
     public void envejecer(int tiempo) {
         this.aumentarTiempo(tiempo);
-        this.aumentarHambre((float) tiempo / 10);
+        if(this.queTramoEdad() == 0){
+            this.aumentarEnergia((float) - tiempo / 8);
+            this.aumentarHambre((float) tiempo / 15);
+            this.aumentarSalud((float) - tiempo / 50);
+        } else if (this.queTramoEdad() == 1) {
+            this.aumentarEnergia((float) - tiempo / 15);
+            this.aumentarHambre((float) tiempo / 10);
+            this.aumentarSalud((float) - tiempo / 50);
+        } else {
+            this.aumentarEnergia((float) - tiempo / 25);
+            this.aumentarHambre((float) tiempo / 20);
+            this.aumentarSalud((float) - tiempo / 25);
+        }
+
         this.aumentarSuciedad((float) tiempo / 15);
-        this.aumentarEnergia((float) - tiempo / 15);
-        this.ganarPeso((float) - tiempo / 60);
-        this.aumentarSalud((float) - tiempo / 50);
         this.aumentarTiempoJuego((float) - tiempo);
+        this.vezesCurada -= ((float) - tiempo / 5);
+
+        if (this.estasEnfermo()){
+            this.ganarPeso((float) - tiempo / 90);
+        } else {
+            this.ganarPeso((float) - tiempo / 60);
+        }
     }
 
     public boolean estasSucio() {
         if (this.suciedad > 45){
+            this.aumentarSalud(-2);
             return true;
         }
         return false;
@@ -203,7 +233,6 @@ public class RatoncitoFiuFiu {
             return this.duerme;
         }
 
-
         return this.duerme;
     }
 
@@ -220,7 +249,7 @@ public class RatoncitoFiuFiu {
     }
 
     public boolean tienesQuejas() {
-        if (this.tienesHambre() && !estasMuerto()){
+        if (this.tienesHambre() && !this.estasMuerto() && !this.estasEnfermo()){
             return true;
         }
 
@@ -228,7 +257,10 @@ public class RatoncitoFiuFiu {
     }
 
     public boolean estasEntretenido(){
-        if (tiempoJuego > 10){
+        if (this.tiempoJuego < 0){
+            this.tiempoJuego = 0;
+        }
+        if (this.tiempoJuego > 5){
             return true;
         }
         return false;
@@ -238,8 +270,8 @@ public class RatoncitoFiuFiu {
         this.tiempoJuego += segundos;
     }
     public boolean jugar (float cantidadDiversion){
-        this.aumentarEnergia(-cantidadDiversion/3);
-        this.aumentarHambre(cantidadDiversion/7);
+        this.aumentarEnergia(-cantidadDiversion/4);
+        this.aumentarHambre(cantidadDiversion/10);
         this.aumentarTiempoJuego(cantidadDiversion);
         return true;
     }
