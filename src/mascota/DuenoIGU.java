@@ -175,7 +175,7 @@ public class DuenoIGU extends JFrame {
         contentPane.setPreferredSize(new Dimension(100, 100));
         contentPane.setLayout(borderLayout1);
         this.getContentPane().setBackground(Color.white);
-        this.setSize(new Dimension(341, 337));
+        this.setSize(new Dimension(341, 450));
         this.setTitle("mascota.RatoncitoFiuFiu : ");
         botonEstadisticas.setText("Estadisticas");
         botonEstadisticas.addMouseListener(new MouseAdapter() {
