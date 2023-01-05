@@ -1,0 +1,1 @@
+La pantalla del juego se a estirado para que la ultima animacion incorporada no se salga del borde
