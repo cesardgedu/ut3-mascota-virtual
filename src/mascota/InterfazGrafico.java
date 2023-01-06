@@ -40,8 +40,4 @@ public class InterfazGrafico {
 
         new InterfazGrafico();
     }
-
-    public static void reiniciar(){
-        new InterfazGrafico();
-    }
 }
