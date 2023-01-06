@@ -29,6 +29,7 @@ public class DuenoIGU extends JFrame {
     private TitledBorder titledBorder2;
 
     private RatoncitoFiuFiu mascota;
+    private int nvm = 0;
     private Timer temporizador;
     private long horaActual, horaAnterior;
     private boolean estadoAnimacion = true;
@@ -74,7 +75,31 @@ public class DuenoIGU extends JFrame {
                     if (muerto) {
                         ruta1 = rutaImagenes + "/muerto.gif";
                         ruta2 = rutaImagenes + "/muerto.gif";
-                    } else if (dormidoEnfermoSucio) {
+                        String tramoRaton;
+                        if (mascota.queTramoEdad() == 0){
+                            tramoRaton = "durante la infancia a la edad de " + mascota.getTiempoJuego();
+                        } else if (mascota.queTramoEdad() == 1) {
+                            tramoRaton = "siendo adulto a la edad de " + mascota.getTiempoJuego();
+                        } else {
+                            tramoRaton = "siendo abuelo a la edad de " + mascota.getTiempoJuego();
+                        }
+                        if (nvm == 0) {
+                            nvm++;
+                            JFrame jFrame = new JFrame();
+                            JOptionPane.showMessageDialog(jFrame, "El ratoncito fiu fiu murio " + tramoRaton);
+
+                            JFrame reiniciar = new JFrame();
+                            int result = JOptionPane.showConfirmDialog(jFrame, "Desea segir jugando.");
+
+                            if (result == 0) {
+                                InterfazGrafico.main(null);
+                            } else if (result == 1) {
+                                System.exit(0);
+                            } else {
+                                System.exit(0);
+                            }
+                        }
+                } else if (dormidoEnfermoSucio) {
                         ruta1 = rutaImagenes + "/dormido-enfermo-sucio-" + tramoEdad.toString() + "-00.gif";
                         ruta2 = rutaImagenes + "/dormido-enfermo-sucio-" + tramoEdad.toString() + "-01.gif";
                     } else if (dormidoSucio) {

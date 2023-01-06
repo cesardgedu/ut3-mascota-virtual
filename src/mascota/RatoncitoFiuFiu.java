@@ -275,4 +275,8 @@ public class RatoncitoFiuFiu {
         this.aumentarTiempoJuego(cantidadDiversion);
         return true;
     }
+
+    public int getTiempoJuego() {
+        return tiempoJuego;
+    }
 }

@@ -1,1 +1,3 @@
 La pantalla del juego se a estirado para que la ultima animacion incorporada no se salga del borde
+Cuando el ratoncito muere sale un mensage que tedice a que edad y tramo de vida se murio el ratoncito
+cuando e ratoncito muere sale la opcion para reiniciar el juego o para cerrarlo
